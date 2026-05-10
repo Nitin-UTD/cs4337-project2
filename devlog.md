@@ -194,3 +194,21 @@ After loading the input file correctly, `[project2].` loaded successfully and `a
 
 ### Next step
 Next, I plan to add a helper predicate for collecting workstation information. This should gather each workstation along with its minimum and maximum worker limits so the final schedule can later check capacity requirements.
+
+-------------------------------------------------------------------------------------------------------------
+
+## 2026-05-09 12:21 PM --- Session 5 - Workstation Collection Helper
+
+### Thoughts so far
+The project file now has a working `all_employees/1` helper. I tested it with `example-input-1.pl`, and it successfully collected the employees from the consulted input facts.
+
+The next helper I need is for collecting workstation information. The input files define workstations using `workstation/3`, where the first value is the workstation name or number, the second value is the minimum number of employees, and the third value is the maximum number of employees. This information will be needed later when checking whether each workstation has a valid number of assigned workers.
+
+### Plan for this session
+- Add an `all_workstations/1` helper predicate
+- Use `findall/3` to collect each `workstation(Station, Min, Max)` fact
+- Load `example-input-1.pl` with `project2.pl`
+- Test that `all_workstations(Workstations).` returns the expected workstation list
+- Commit the workstation helper
+- Add an end-of-session reflection
+- Push the session progress to GitHub
