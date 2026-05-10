@@ -177,3 +177,20 @@ The first useful helper is for collecting all employees from the consulted input
 - Commit the new helper predicate
 - Add an end-of-session reflection
 - Push the session progress to GitHub
+
+-------------------------------------------------------------------------------------------------------------
+
+## 2026-05-08 12:42 PM --- Session 4 - Employee Helper Tested
+
+### Progress made
+I added the first real helper predicate, `all_employees/1`, to `project2.pl`. This helper uses `findall/3` to collect all employees from the currently consulted input facts into one list.
+
+I tested the helper with `example-input-1.pl` and confirmed that it returned a list of employees. This is an important first step because the final scheduling logic will need to assign every employee exactly once.
+
+### Notes
+I initially tried loading the example input file with `[example-input-1].`, but SWI-Prolog treated the hyphens in the file name incorrectly. The correct way to load files with hyphens is to put the file name in quotes, like `['example-input-1.pl'].`.
+
+After loading the input file correctly, `[project2].` loaded successfully and `all_employees(Employees).` returned the expected employee list.
+
+### Next step
+Next, I plan to add a helper predicate for collecting workstation information. This should gather each workstation along with its minimum and maximum worker limits so the final schedule can later check capacity requirements.
