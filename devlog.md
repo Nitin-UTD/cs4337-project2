@@ -212,3 +212,20 @@ The next helper I need is for collecting workstation information. The input file
 - Commit the workstation helper
 - Add an end-of-session reflection
 - Push the session progress to GitHub
+
+-------------------------------------------------------------------------------------------------------------
+
+## 2026-05-09 1:00 PM --- Session 5 - Workstation Helper Tested
+
+### Progress made
+I added the `all_workstations/1` helper predicate to `project2.pl`. This helper uses `findall/3` to collect every `workstation(Station, Min, Max)` fact from the consulted input file into a list.
+
+I tested it using `example-input-1.pl` and confirmed that it returned the expected workstation list: workstation 1 with limits 2 to 4, workstation 2 with limits 5 to 9, and workstation 3 with limits 1 to 1.
+
+### Notes
+This helper will be important later because the final schedule must check that each active workstation has at least its minimum number of workers and no more than its maximum number of workers.
+
+The test also confirmed again that loading files with hyphens requires quotes, such as `['example-input-1.pl'].`.
+
+### Next step
+Next, I plan to add a helper for the three valid shifts: morning, evening, and night. After that, I can begin checking whether a workstation is active or idle during a specific shift.
