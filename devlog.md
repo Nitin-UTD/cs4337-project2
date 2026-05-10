@@ -111,3 +111,16 @@ Before writing the actual Prolog solution, I want to add the provided Project 2 
 - Commit the provided project files
 - Add an end-of-session devlog reflection
 - Push the session progress to GitHub
+
+-------------------------------------------------------------------------------------------------------------
+
+## 2026-05-05 9:22 PM --- Session 2 - Provided Files Added
+
+### Progress made
+I added the provided Project 2 files to the repository. This included the testing helper file, five example input files, and five example output files. I checked the directory listing and Git status before committing to make sure only the correct Project 2 files were included.
+
+### Notes
+The repository now has the provided examples needed for testing the scheduling logic once `project2.pl` is created.
+
+### Next step
+Next, I plan to create the main `project2.pl` file and add a small placeholder version of `plan/1`. This will let me confirm that SWI-Prolog can load the project file before building the real scheduling logic.
