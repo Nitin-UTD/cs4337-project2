@@ -93,3 +93,21 @@ The local branch main is now tracking origin/main. This means future commits can
 
 ### Next step
 Next, I plan to add the provided Project 2 files, including the testing file, example input files, and example output files. After that, I will begin creating the first Prolog project file.
+
+-------------------------------------------------------------------------------------------------------------
+
+## 2026-05-05 9:10 PM --- Session 2 - Adding Provided Project Files
+
+### Thoughts so far
+The local Git repository and GitHub remote are both set up and working. The devlog now has a project overview, a list of what I know about the assignment, and an overall plan for completing the project.
+
+Before writing the actual Prolog solution, I want to add the provided Project 2 files to the repository. These files will help me test the program as I build it. The provided testing file is especially useful because it includes helper predicates for checking whether an employee has no work or is assigned more than once.
+
+### Plan for this session
+- Add the provided `testing.pl` file
+- Add all five example input `.pl` files
+- Add all five example output `.txt` files
+- Check Git status to make sure only the correct files are being added
+- Commit the provided project files
+- Add an end-of-session devlog reflection
+- Push the session progress to GitHub
