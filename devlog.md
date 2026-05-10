@@ -124,3 +124,21 @@ The repository now has the provided examples needed for testing the scheduling l
 
 ### Next step
 Next, I plan to create the main `project2.pl` file and add a small placeholder version of `plan/1`. This will let me confirm that SWI-Prolog can load the project file before building the real scheduling logic.
+
+-------------------------------------------------------------------------------------------------------------
+
+## 2026-05-07 7:51 PM --- Session 3 - Creating Initial Prolog File
+
+### Thoughts so far
+The repository now contains the provided Project 2 testing file and example input/output files. The setup work is complete, so I can begin creating the actual Prolog implementation file.
+
+Before writing the full scheduling logic, I want to start with a small placeholder version of `plan/1`. This will let me confirm that the project file loads correctly in SWI-Prolog before I add more complicated helper predicates. Since the project requires `plan/1` to fail when no valid schedule can be created, a temporary failing placeholder is a safe first step.
+
+### Plan for this session
+- Create the main `project2.pl` file
+- Add a temporary placeholder definition for `plan/1`
+- Load `project2.pl` in SWI-Prolog
+- Confirm that querying `plan(Plan).` returns `false`
+- Commit the initial Prolog file
+- Add an end-of-session reflection
+- Push the session progress to GitHub
