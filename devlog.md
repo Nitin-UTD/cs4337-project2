@@ -159,3 +159,21 @@ This is not the final scheduling logic yet. It is only a safe starting point bef
 
 ### Next step
 Next, I plan to start adding simple helper predicates. The first helper will collect all employees from the consulted input facts using `findall/3`, then I will test it with one of the provided example input files.
+
+-------------------------------------------------------------------------------------------------------------
+
+## 2026-05-08 11:11 AM --- Session 4 - Employee Collection Helper
+
+### Thoughts so far
+The main Prolog file now exists and loads correctly in SWI-Prolog. The current `plan/1` predicate is only a placeholder, so the next step is to start adding small helper predicates that will eventually support the full scheduling logic.
+
+The first useful helper is for collecting all employees from the consulted input facts. Since the project input files define employees using `employee/1`, I can use Prolog's `findall/3` predicate to gather every employee into a list.
+
+### Plan for this session
+- Add an `all_employees/1` helper predicate
+- Keep the temporary `plan/1` placeholder unchanged for now
+- Load one example input file together with `project2.pl`
+- Test that `all_employees(Employees).` returns a list of employees
+- Commit the new helper predicate
+- Add an end-of-session reflection
+- Push the session progress to GitHub
