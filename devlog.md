@@ -142,3 +142,20 @@ Before writing the full scheduling logic, I want to start with a small placehold
 - Commit the initial Prolog file
 - Add an end-of-session reflection
 - Push the session progress to GitHub
+
+-------------------------------------------------------------------------------------------------------------
+
+## 2026-05-07 8:20 PM --- Session 3 - Initial Prolog File Created
+
+### Progress made
+I created the main `project2.pl` file and added a temporary placeholder version of `plan/1`. The placeholder currently fails on purpose, but it confirms that the required predicate name exists and that the project file can be loaded by SWI-Prolog.
+
+I also installed SWI-Prolog on my Windows machine because the `swipl` command was not recognized at first. After installing it and reopening the terminal, `swipl --version` worked correctly.
+
+### Notes
+The initial placeholder was tested by loading `project2.pl` inside SWI-Prolog using `[project2].` and then querying `plan(Plan).`. The file loaded successfully and the query returned `false`, which matches the current placeholder behavior.
+
+This is not the final scheduling logic yet. It is only a safe starting point before adding helper predicates.
+
+### Next step
+Next, I plan to start adding simple helper predicates. The first helper will collect all employees from the consulted input facts using `findall/3`, then I will test it with one of the provided example input files.
