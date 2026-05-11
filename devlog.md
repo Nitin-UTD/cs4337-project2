@@ -436,3 +436,20 @@ The main logic now appears to satisfy the major project requirements. The next s
 ### Next step
 Next, I plan to do final cleanup. This includes improving formatting if needed, adding comments, creating `README.md`, doing one more clean test run, checking Git status, pushing to GitHub, and preparing the zip file for submission.
 
+-------------------------------------------------------------------------------------------------------------
+
+## 2026-05-10 8:35 PM --- Session 10B - Missing Input Guard
+
+### Thoughts so far
+After completing the main plan logic, I tested loading only `project2.pl` without first consulting an example input file. This caused an unknown procedure error for `employee/1`, because the employee facts come from the separate input files.
+
+The project prompt assumes that a facts file will be consulted with the project code, but I still want the program to behave more safely if the input facts have not been loaded yet. Instead of throwing an error, `plan/1` should simply fail when the required input predicates are missing.
+
+### Plan for this session
+- Add an `input_ready/0` helper predicate
+- Update `plan/1` so it only runs when required input predicates exist
+- Add guards around employee and workstation collection helpers
+- Test that loading only `project2.pl` makes `plan(Plan).` return false instead of an error
+- Retest with `example-input-1.pl` to make sure the real scheduling logic still works
+- Commit and push the fix
+
