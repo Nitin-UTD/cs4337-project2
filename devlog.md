@@ -360,3 +360,26 @@ The next major goal is to start building the internal assignment system. Before 
 - Add an end-of-session reflection
 - Push the session progress to GitHub
 
+-------------------------------------------------------------------------------------------------------------
+
+## 2026-05-09 10:44 PM --- Session 9 - Assignment Building Helpers Tested
+
+### Progress made
+This session added several assignment-related helper predicates to `project2.pl`.
+
+First, I added `can_work/3`, which combines shift eligibility, workstation eligibility, and active workstation checking into one predicate. I tested it with `example-input-1.pl`, and it correctly rejected Daniel on the night shift, rejected Ophelia at restricted workstations, allowed Ophelia at workstation 2, and rejected workstation 3 during the morning shift.
+
+Next, I added empty assignment slot helpers. These create internal `slot(Shift, Station, Min, Max, Workers)` structures for every active workstation during every valid shift. I tested this with `example-input-1.pl` and confirmed that workstation 3 was excluded from the morning slots because it is idle in the morning.
+
+Then I added helpers for assigning one employee to a slot, assigning one employee across a list of slots, and assigning all employees recursively. These helpers successfully placed employees into valid slots while respecting shift restrictions, workstation restrictions, and maximum workstation capacity.
+
+### Notes
+The internal slot structure is not the final required output format. It is only an intermediate format that makes assignment and validation easier.
+
+The current code can assign employees to slots, but it does not yet check whether every workstation has at least its minimum number of workers. It also does not yet convert the slot list into the final required `plan(Morning, Evening, Night)` structure.
+
+During testing, I also made a small typo when typing `all_empty_slots/1`, but SWI-Prolog suggested the correct predicate name and the corrected query worked.
+
+### Next step
+Next, I plan to add validation logic for workstation minimum and maximum worker counts. After that, I will convert the internal slot representation into the required final plan structure.
+
