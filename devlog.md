@@ -473,3 +473,24 @@ The project prompt assumes that the facts file will be consulted with the projec
 ### Next step
 Next, I plan to do final cleanup, add comments, write the README, run a final test, push to GitHub, and prepare the zip file for submission.
 
+-------------------------------------------------------------------------------------------------------------
+
+## 2026-05-10 9:30 PM --- Session 11 - Final Cleanup and Submission Prep
+
+### Thoughts so far
+The main scheduling logic for `plan/1` is now working. The program was tested with all five provided example input files. The valid examples returned schedules, and the impossible example correctly returned false.
+
+I also added an input readiness guard so that loading only `project2.pl` and querying `plan(Plan).` fails safely instead of throwing an unknown predicate error.
+
+The current code satisfies the major project requirements: every employee is assigned exactly once, workstation minimum and maximum limits are checked, idle workstations are avoided, restricted workstations are avoided, and restricted shifts are avoided.
+
+### Plan for this session
+- Add comments to `project2.pl` explaining the major helper predicates
+- Make sure the code is formatted clearly
+- Add a `README.md` file explaining the project files and how to run the program
+- Run a final quick test
+- Add final devlog notes
+- Check that Git status is clean
+- Push the final version to GitHub
+- Prepare the repository zip file for submission
+
