@@ -38,3 +38,10 @@ all_empty_slots(Slots) :-
     findall(slot(Shift, Station, Min, Max, []),
             empty_slot(slot(Shift, Station, Min, Max, [])),
             Slots).
+
+assign_employee_to_slot(Employee,
+                        slot(Shift, Station, Min, Max, Workers),
+                        slot(Shift, Station, Min, Max, [Employee|Workers])) :-
+    can_work(Employee, Shift, Station),
+    length(Workers, Count),
+    Count < Max.
