@@ -23,3 +23,8 @@ can_work_station(Employee, Station) :-
     employee(Employee),
     workstation(Station, _, _),
     \+ avoid_workstation(Employee, Station).
+
+can_work(Employee, Shift, Station) :-
+    can_work_shift(Employee, Shift),
+    can_work_station(Employee, Station),
+    active_workstation(Station, Shift).
