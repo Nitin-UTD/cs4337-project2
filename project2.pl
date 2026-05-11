@@ -10,19 +10,31 @@ all_employees(Employees) :-
 all_workstations(Workstations) :-
     findall(workstation(Station, Min, Max), workstation(Station, Min, Max), Workstations).
 
+is_idle(Station, Shift) :-
+    current_predicate(workstation_idle/2),
+    workstation_idle(Station, Shift).
+
+avoids_shift(Employee, Shift) :-
+    current_predicate(avoid_shift/2),
+    avoid_shift(Employee, Shift).
+
+avoids_workstation(Employee, Station) :-
+    current_predicate(avoid_workstation/2),
+    avoid_workstation(Employee, Station).
+
 active_workstation(Station, Shift) :-
     workstation(Station, _, _),
-    \+ workstation_idle(Station, Shift).
+    \+ is_idle(Station, Shift).
 
 can_work_shift(Employee, Shift) :-
     employee(Employee),
     shift(Shift),
-    \+ avoid_shift(Employee, Shift).
+    \+ avoids_shift(Employee, Shift).
 
 can_work_station(Employee, Station) :-
     employee(Employee),
     workstation(Station, _, _),
-    \+ avoid_workstation(Employee, Station).
+    \+ avoids_workstation(Employee, Station).
 
 can_work(Employee, Shift, Station) :-
     can_work_shift(Employee, Shift),
