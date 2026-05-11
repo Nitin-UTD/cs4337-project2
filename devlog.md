@@ -383,3 +383,24 @@ During testing, I also made a small typo when typing `all_empty_slots/1`, but SW
 ### Next step
 Next, I plan to add validation logic for workstation minimum and maximum worker counts. After that, I will convert the internal slot representation into the required final plan structure.
 
+-------------------------------------------------------------------------------------------------------------
+
+## 2026-05-10 4:00 PM --- Session 10 - Validation and Real Plan Logic
+
+### Thoughts so far
+The project now has internal assignment helpers that can place employees into valid shift and workstation slots. The current logic respects shift restrictions, workstation restrictions, idle workstations, and maximum workstation capacity while assigning employees.
+
+The next major task is to turn this partial assignment system into a complete `plan/1` implementation. The current `plan/1` predicate is still only a placeholder, so I need to add validation and conversion logic before replacing it with the real version.
+
+### Plan for this session
+- Add safer wrapper predicates for optional restriction facts
+- Update the existing helpers to use the safe wrappers
+- Add validation for workstation minimum and maximum worker counts
+- Add conversion from internal `slot/5` structures into the required `workstation/2` schedule format
+- Build the final `plan(Morning, Evening, Night)` structure
+- Replace the temporary failing `plan/1` placeholder with real scheduling logic
+- Test `plan(Plan).` with `example-input-1.pl`
+- Commit each major code block separately
+- Add an end-of-session reflection
+- Push the session progress to GitHub
+
