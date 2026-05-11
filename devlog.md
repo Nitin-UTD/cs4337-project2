@@ -283,3 +283,20 @@ The next requirement to handle is idle workstations. The project input can inclu
 - Commit the active workstation helper
 - Add an end-of-session reflection
 - Push the session progress to GitHub
+
+-------------------------------------------------------------------------------------------------------------
+
+## 2026-05-09 6:19 PM --- Session 7 - Active Workstation Helper Tested
+
+### Progress made
+I added the `active_workstation/2` helper predicate to `project2.pl`. This helper checks that a workstation exists using `workstation/3` and then confirms that it is not idle during the given shift using `workstation_idle/2`.
+
+I tested the helper with `example-input-1.pl`. In that example, workstation 3 is idle during the morning shift. The query `active_workstation(3, morning).` correctly returned false, while `active_workstation(3, evening).` returned true. I also queried `active_workstation(Station, morning).`, and it returned only workstations 1 and 2.
+
+### Notes
+This helper directly supports one of the project requirements: the final schedule should not contain workstations that are idle during a shift. This will be used later when building shift schedules and assigning employees.
+
+The `\+` operator is being used as negation-as-failure, which works well here because a workstation is active when Prolog cannot prove that it is idle during that shift.
+
+### Next step
+Next, I plan to add helper predicates for employee restrictions. The next part of the project is checking whether an employee can work a shift and whether an employee can work at a workstation.
