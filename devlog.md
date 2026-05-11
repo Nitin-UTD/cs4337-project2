@@ -494,3 +494,23 @@ The current code satisfies the major project requirements: every employee is ass
 - Push the final version to GitHub
 - Prepare the repository zip file for submission
 
+-------------------------------------------------------------------------------------------------------------
+
+## 2026-05-10 11:28 PM --- Session 11 - Final Cleanup Completed
+
+### Progress made
+I completed the final cleanup for the project. I added clear comments to `project2.pl` explaining the major sections of the program, including the main `plan/1` predicate, input helpers, eligibility checks, internal slot representation, minimum-first scheduling, capacity validation, and conversion to the required `plan/3` format.
+
+I also added a `README.md` file explaining the project overview, the purpose of each file, how to run the program, how to use the provided testing helpers, and notes about the internal slot structure.
+
+### Testing completed
+I ran a final quick test by loading `example-input-1.pl`, loading `project2.pl`, and running `once(plan(_)).`. The query returned true, confirming that the final cleaned version still generates a valid plan.
+
+Earlier testing also confirmed that all five provided examples behave correctly, including the impossible case returning false.
+
+### Notes
+The repository now contains the source code, provided examples, testing file, README, and development log. The commit history and devlog show the project being developed in multiple sessions with testing after each major feature.
+
+### Next step
+The final step is to make sure Git status is clean, push the final version to GitHub, and zip the entire repository folder for submission.
+
