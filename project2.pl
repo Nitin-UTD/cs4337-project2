@@ -1,3 +1,21 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS4337 Project 2
+%
+% Prolog scheduling backend.
+%
+% The required predicate is plan/1. The input facts are expected to be loaded
+% from a separate file before or along with this project file.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% plan(Plan)
+%
+% Builds a valid work schedule in the form:
+% plan(MorningSchedule, EveningSchedule, NightSchedule)
+%
+% Each shift schedule is a list of workstation(Station, Workers) structures.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 plan(Plan) :-
     input_ready,
     all_employees(Employees),
@@ -8,6 +26,10 @@ plan(Plan) :-
     valid_slots(FilledSlots),
     slots_to_plan(FilledSlots, Plan),
     !.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Basic input and shift helpers
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 input_ready :-
     current_predicate(employee/1),
@@ -25,6 +47,10 @@ all_workstations(Workstations) :-
     current_predicate(workstation/3),
     findall(workstation(Station, Min, Max), workstation(Station, Min, Max), Workstations).
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Safe wrappers for optional predicates
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 is_idle(Station, Shift) :-
     current_predicate(workstation_idle/2),
     workstation_idle(Station, Shift).
@@ -36,6 +62,10 @@ avoids_shift(Employee, Shift) :-
 avoids_workstation(Employee, Station) :-
     current_predicate(avoid_workstation/2),
     avoid_workstation(Employee, Station).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Eligibility helpers
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 active_workstation(Station, Shift) :-
     current_predicate(workstation/3),
@@ -60,6 +90,12 @@ can_work(Employee, Shift, Station) :-
     can_work_station(Employee, Station),
     active_workstation(Station, Shift).
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Internal slot representation
+%
+% slot(Shift, Station, Min, Max, Workers)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 empty_slot(slot(Shift, Station, Min, Max, [])) :-
     current_predicate(workstation/3),
     shift(Shift),
@@ -76,6 +112,10 @@ valid_slot_limits([]).
 valid_slot_limits([slot(_, _, Min, Max, _)|Rest]) :-
     Min =< Max,
     valid_slot_limits(Rest).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Minimum-first scheduling
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 choose_workers(0, Employees, _, _, [], Employees).
 
@@ -94,6 +134,10 @@ fill_minimums([slot(Shift, Station, Min, Max, [])|RestSlots],
               EmployeesOut) :-
     choose_workers(Min, EmployeesIn, Shift, Station, Workers, RemainingEmployees),
     fill_minimums(RestSlots, RemainingEmployees, FilledRest, EmployeesOut).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Assigning remaining employees after minimums are satisfied
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 assign_employee_to_slot(Employee,
                         slot(Shift, Station, Min, Max, Workers),
@@ -117,6 +161,10 @@ assign_all_employees([Employee|RestEmployees], SlotsIn, SlotsOut) :-
 assign_remaining_employees(Employees, SlotsIn, SlotsOut) :-
     assign_all_employees(Employees, SlotsIn, SlotsOut).
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Capacity validation
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 valid_slot(slot(_, _, Min, Max, Workers)) :-
     length(Workers, Count),
     Count >= Min,
@@ -127,6 +175,10 @@ valid_slots([]).
 valid_slots([Slot|Rest]) :-
     valid_slot(Slot),
     valid_slots(Rest).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Conversion from internal slots to required plan/3 format
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 slot_to_workstation(slot(_, Station, _, _, Workers), workstation(Station, Workers)) :-
     Workers \= [].
