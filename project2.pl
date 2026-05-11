@@ -24,8 +24,7 @@ plan(Plan) :-
     fill_minimums(EmptySlots, Employees, MinimumFilledSlots, RemainingEmployees),
     assign_remaining_employees(RemainingEmployees, MinimumFilledSlots, FilledSlots),
     valid_slots(FilledSlots),
-    slots_to_plan(FilledSlots, Plan),
-    !.
+    slots_to_plan(FilledSlots, Plan).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Basic input and shift helpers
