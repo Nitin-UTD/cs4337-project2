@@ -80,3 +80,21 @@ valid_slots([]).
 valid_slots([Slot|Rest]) :-
     valid_slot(Slot),
     valid_slots(Rest).
+
+slot_to_workstation(slot(_, Station, _, _, Workers), workstation(Station, Workers)) :-
+    Workers \= [].
+
+slots_for_shift([], _, []).
+
+slots_for_shift([slot(Shift, Station, Min, Max, Workers)|Rest], Shift, [workstation(Station, Workers)|ScheduleRest]) :-
+    slot_to_workstation(slot(Shift, Station, Min, Max, Workers), workstation(Station, Workers)),
+    slots_for_shift(Rest, Shift, ScheduleRest).
+
+slots_for_shift([slot(OtherShift, _, _, _, _)|Rest], Shift, Schedule) :-
+    OtherShift \= Shift,
+    slots_for_shift(Rest, Shift, Schedule).
+
+slots_to_plan(Slots, plan(Morning, Evening, Night)) :-
+    slots_for_shift(Slots, morning, Morning),
+    slots_for_shift(Slots, evening, Evening),
+    slots_for_shift(Slots, night, Night).
