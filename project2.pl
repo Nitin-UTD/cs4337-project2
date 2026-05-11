@@ -13,3 +13,13 @@ all_workstations(Workstations) :-
 active_workstation(Station, Shift) :-
     workstation(Station, _, _),
     \+ workstation_idle(Station, Shift).
+
+can_work_shift(Employee, Shift) :-
+    employee(Employee),
+    shift(Shift),
+    \+ avoid_shift(Employee, Shift).
+
+can_work_station(Employee, Station) :-
+    employee(Employee),
+    workstation(Station, _, _),
+    \+ avoid_workstation(Employee, Station).
