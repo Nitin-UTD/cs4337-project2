@@ -404,3 +404,35 @@ The next major task is to turn this partial assignment system into a complete `p
 - Add an end-of-session reflection
 - Push the session progress to GitHub
 
+-------------------------------------------------------------------------------------------------------------
+
+## 2026-05-10 8:12 PM --- Session 10 - Validation and Plan Logic Tested
+
+### Progress made
+This session completed the main scheduling logic for `plan/1`.
+
+I first added safe wrapper predicates for optional facts such as `workstation_idle/2`, `avoid_shift/2`, and `avoid_workstation/2`. This helps avoid errors if a test file does not define one of those predicates.
+
+Next, I added validation helpers for workstation capacity. These helpers check that each slot has at least the required minimum number of workers and no more than the maximum number of workers.
+
+After that, I added conversion helpers to turn the internal `slot(Shift, Station, Min, Max, Workers)` structure into the final required `plan(Morning, Evening, Night)` format using `workstation(Station, Workers)` entries.
+
+I initially tried a direct plan generation approach that assigned all employees first and checked minimums at the end, but it was too slow because Prolog had to search through too many invalid possibilities. I replaced it with a minimum-first strategy that fills each workstation's required minimum first, then assigns remaining employees afterward. This made `once(plan(_)).` return quickly.
+
+### Testing completed
+I tested the program with all five provided example input files.
+
+- `example-input-1.pl` returned a valid plan and passed checks for no missing work, no double work, Ophelia's workstation restrictions, Daniel's night shift restriction, and workstation 3 being idle in the morning.
+- `example-input-2.pl` correctly returned `false` because one workstation has a minimum greater than its maximum.
+- `example-input-3.pl` returned a valid plan and passed Daniel's morning and evening shift restrictions.
+- `example-input-4.pl` returned a valid plan and passed Iris's workstation restrictions, Sarah's night shift restriction, and Ulysses's morning shift restriction.
+- `example-input-5.pl` returned a valid plan and passed Ophelia's morning shift restriction.
+
+### Notes
+The repeated names printed during some tests came from the provided `testing.pl` file, not from my project code. The important part is that the final query results returned `false` for invalid conditions like `no_work/2`, `double_work/2`, and restricted assignments.
+
+The main logic now appears to satisfy the major project requirements. The next step is to clean up the code, add helpful comments, write the README, and prepare the final submission.
+
+### Next step
+Next, I plan to do final cleanup. This includes improving formatting if needed, adding comments, creating `README.md`, doing one more clean test run, checking Git status, pushing to GitHub, and preparing the zip file for submission.
+
