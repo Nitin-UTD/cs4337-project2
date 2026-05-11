@@ -340,3 +340,23 @@ At this point, several basic building blocks are working: employee collection, w
 ### Next step
 Next, I plan to combine the shift and workstation checks into a single helper predicate for valid employee assignments. After that, I can start generating assignment structures for employees.
 
+-------------------------------------------------------------------------------------------------------------
+
+## 2026-05-09 7:27 PM --- Session 9 - Assignment Building Helpers
+
+### Thoughts so far
+The project now has several tested helper predicates: collecting employees, collecting workstations, listing shifts, checking active workstations, and checking employee shift/workstation restrictions.
+
+The next major goal is to start building the internal assignment system. Before creating the final `plan/3` structure, it will be easier to create internal assignment slots for each active workstation during each shift and then place employees into those slots.
+
+### Plan for this session
+- Add a combined `can_work/3` helper that checks shift, workstation, and active workstation rules together
+- Test `can_work/3` with known restrictions from `example-input-1.pl`
+- Add a helper to build empty assignment slots for every active workstation during every shift
+- Test that morning slots exclude idle workstation 3 in `example-input-1.pl`
+- Add a helper for assigning one employee to one valid slot
+- Test a simple one-employee assignment
+- Commit each feature separately
+- Add an end-of-session reflection
+- Push the session progress to GitHub
+
