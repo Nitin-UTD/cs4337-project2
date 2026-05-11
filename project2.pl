@@ -1,4 +1,12 @@
-plan(_) :- fail.
+plan(Plan) :-
+    all_employees(Employees),
+    all_empty_slots(EmptySlots),
+    valid_slot_limits(EmptySlots),
+    fill_minimums(EmptySlots, Employees, MinimumFilledSlots, RemainingEmployees),
+    assign_remaining_employees(RemainingEmployees, MinimumFilledSlots, FilledSlots),
+    valid_slots(FilledSlots),
+    slots_to_plan(FilledSlots, Plan),
+    !.
 
 shift(morning).
 shift(evening).
@@ -51,6 +59,30 @@ all_empty_slots(Slots) :-
             empty_slot(slot(Shift, Station, Min, Max, [])),
             Slots).
 
+valid_slot_limits([]).
+
+valid_slot_limits([slot(_, _, Min, Max, _)|Rest]) :-
+    Min =< Max,
+    valid_slot_limits(Rest).
+
+choose_workers(0, Employees, _, _, [], Employees).
+
+choose_workers(Count, EmployeesIn, Shift, Station, [Employee|ChosenRest], EmployeesOut) :-
+    Count > 0,
+    select(Employee, EmployeesIn, RemainingEmployees),
+    can_work(Employee, Shift, Station),
+    NextCount is Count - 1,
+    choose_workers(NextCount, RemainingEmployees, Shift, Station, ChosenRest, EmployeesOut).
+
+fill_minimums([], Employees, [], Employees).
+
+fill_minimums([slot(Shift, Station, Min, Max, [])|RestSlots],
+              EmployeesIn,
+              [slot(Shift, Station, Min, Max, Workers)|FilledRest],
+              EmployeesOut) :-
+    choose_workers(Min, EmployeesIn, Shift, Station, Workers, RemainingEmployees),
+    fill_minimums(RestSlots, RemainingEmployees, FilledRest, EmployeesOut).
+
 assign_employee_to_slot(Employee,
                         slot(Shift, Station, Min, Max, Workers),
                         slot(Shift, Station, Min, Max, [Employee|Workers])) :-
@@ -70,6 +102,9 @@ assign_all_employees([Employee|RestEmployees], SlotsIn, SlotsOut) :-
     assign_employee(Employee, SlotsIn, UpdatedSlots),
     assign_all_employees(RestEmployees, UpdatedSlots, SlotsOut).
 
+assign_remaining_employees(Employees, SlotsIn, SlotsOut) :-
+    assign_all_employees(Employees, SlotsIn, SlotsOut).
+
 valid_slot(slot(_, _, Min, Max, Workers)) :-
     length(Workers, Count),
     Count >= Min,
@@ -86,8 +121,11 @@ slot_to_workstation(slot(_, Station, _, _, Workers), workstation(Station, Worker
 
 slots_for_shift([], _, []).
 
-slots_for_shift([slot(Shift, Station, Min, Max, Workers)|Rest], Shift, [workstation(Station, Workers)|ScheduleRest]) :-
-    slot_to_workstation(slot(Shift, Station, Min, Max, Workers), workstation(Station, Workers)),
+slots_for_shift([slot(Shift, _, _, _, [])|Rest], Shift, Schedule) :-
+    slots_for_shift(Rest, Shift, Schedule).
+
+slots_for_shift([slot(Shift, Station, _, _, Workers)|Rest], Shift, [workstation(Station, Workers)|ScheduleRest]) :-
+    Workers \= [],
     slots_for_shift(Rest, Shift, ScheduleRest).
 
 slots_for_shift([slot(OtherShift, _, _, _, _)|Rest], Shift, Schedule) :-
