@@ -321,3 +321,22 @@ The next requirement is to handle employee restrictions. The input files can inc
 - Add an end-of-session reflection
 - Push the session progress to GitHub
 
+-------------------------------------------------------------------------------------------------------------
+
+## 2026-05-09 7:10 PM --- Session 8 - Employee Eligibility Helpers Tested
+
+### Progress made
+I added two employee eligibility helper predicates to `project2.pl`: `can_work_shift/2` and `can_work_station/2`.
+
+The `can_work_shift/2` helper checks that an employee exists, that the shift is valid, and that the employee is not listed in an `avoid_shift/2` fact for that shift. The `can_work_station/2` helper checks that an employee exists, that the workstation exists, and that the employee is not listed in an `avoid_workstation/2` fact for that workstation.
+
+I tested these helpers using `example-input-1.pl`. Daniel correctly could not work the night shift, but could work the morning shift. Ophelia correctly could not work workstations 1 or 3, but could work workstation 2.
+
+### Notes
+These helpers are important because the final schedule must avoid assigning employees to restricted shifts or restricted workstations.
+
+At this point, several basic building blocks are working: employee collection, workstation collection, shift generation, active workstation checking, and employee restriction checking.
+
+### Next step
+Next, I plan to combine the shift and workstation checks into a single helper predicate for valid employee assignments. After that, I can start generating assignment structures for employees.
+
