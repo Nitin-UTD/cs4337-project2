@@ -28,3 +28,13 @@ can_work(Employee, Shift, Station) :-
     can_work_shift(Employee, Shift),
     can_work_station(Employee, Station),
     active_workstation(Station, Shift).
+
+empty_slot(slot(Shift, Station, Min, Max, [])) :-
+    shift(Shift),
+    workstation(Station, Min, Max),
+    active_workstation(Station, Shift).
+
+all_empty_slots(Slots) :-
+    findall(slot(Shift, Station, Min, Max, []),
+            empty_slot(slot(Shift, Station, Min, Max, [])),
+            Slots).
