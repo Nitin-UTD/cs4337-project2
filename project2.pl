@@ -51,3 +51,9 @@ assign_employee(Employee, [Slot|Rest], [NewSlot|Rest]) :-
 
 assign_employee(Employee, [Slot|Rest], [Slot|NewRest]) :-
     assign_employee(Employee, Rest, NewRest).
+
+assign_all_employees([], Slots, Slots).
+
+assign_all_employees([Employee|RestEmployees], SlotsIn, SlotsOut) :-
+    assign_employee(Employee, SlotsIn, UpdatedSlots),
+    assign_all_employees(RestEmployees, UpdatedSlots, SlotsOut).
