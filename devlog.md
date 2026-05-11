@@ -247,3 +247,21 @@ The next piece of scheduling information is the set of valid shifts. The project
 - Commit the shift helper
 - Add an end-of-session reflection
 - Push the session progress to GitHub
+
+-------------------------------------------------------------------------------------------------------------
+
+## 2026-05-09 4:58 PM --- Session 6 - Shift Helper Tested
+
+### Progress made
+I added the `shift/1` helper predicate to `project2.pl`. It defines the three valid shifts used by the project: morning, evening, and night.
+
+I tested the helper in SWI-Prolog by loading `project2.pl` and querying `shift(Shift).`. The query successfully generated all three shifts.
+
+### Notes
+While testing, I accidentally triggered Prolog's action prompt after the first answer. I learned that when Prolog gives one answer and waits, typing `;` asks it to search for the next possible answer. After using `;` correctly, Prolog returned morning, evening, and night as expected.
+
+This helper will be useful later when generating possible shift assignments for employees.
+
+### Next step
+Next, I plan to add logic for checking whether a workstation is active during a shift. This will use the `workstation_idle/2` facts so that idle workstations do not appear in the final schedule.
+
