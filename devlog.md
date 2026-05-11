@@ -453,3 +453,23 @@ The project prompt assumes that a facts file will be consulted with the project 
 - Retest with `example-input-1.pl` to make sure the real scheduling logic still works
 - Commit and push the fix
 
+-------------------------------------------------------------------------------------------------------------
+
+## 2026-05-10 8:50 PM --- Session 10B - Missing Input Guard Tested
+
+### Progress made
+I added an input readiness guard to `project2.pl`. The new `input_ready/0` helper checks that the required input predicates, especially `employee/1` and `workstation/3`, exist before `plan/1` tries to generate a schedule.
+
+I also added guards around employee and workstation collection helpers so that the program fails cleanly instead of throwing an unknown procedure error if the input facts have not been loaded.
+
+### Testing completed
+I tested loading only `project2.pl` and then querying `plan(Plan).`. Before this fix, that caused an unknown procedure error for `employee/1`. After the fix, the query returned `false`, which is safer behavior.
+
+I also retested normal behavior by loading `example-input-1.pl` before `project2.pl`, then running `once(plan(_)).`. The query returned `true`, so the real scheduling logic still works when the required facts are loaded.
+
+### Notes
+The project prompt assumes that the facts file will be consulted with the project code, but this guard makes the program more robust in case the grader or user accidentally loads only `project2.pl`.
+
+### Next step
+Next, I plan to do final cleanup, add comments, write the README, run a final test, push to GitHub, and prepare the zip file for submission.
+
