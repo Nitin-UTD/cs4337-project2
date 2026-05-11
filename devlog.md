@@ -265,3 +265,21 @@ This helper will be useful later when generating possible shift assignments for 
 ### Next step
 Next, I plan to add logic for checking whether a workstation is active during a shift. This will use the `workstation_idle/2` facts so that idle workstations do not appear in the final schedule.
 
+-------------------------------------------------------------------------------------------------------------
+
+## 2026-05-09 6:00 PM --- Session 7 - Active Workstation Helper
+
+### Thoughts so far
+The project now has helpers for collecting employees, collecting workstations, and generating the three valid shifts. These are basic building blocks for the scheduling logic.
+
+The next requirement to handle is idle workstations. The project input can include `workstation_idle/2` facts, which mean that a workstation should not be used during a certain shift. Before assigning employees to workstations, I need a helper that can tell whether a workstation is active during a specific shift.
+
+### Plan for this session
+- Add an `active_workstation/2` helper predicate
+- Use `workstation/3` to confirm that the station exists
+- Use `workstation_idle/2` to reject stations that are idle during a shift
+- Test with `example-input-1.pl`, where workstation 3 is idle in the morning
+- Confirm that workstation 3 is not active in the morning but is active during other shifts
+- Commit the active workstation helper
+- Add an end-of-session reflection
+- Push the session progress to GitHub
