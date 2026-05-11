@@ -69,3 +69,14 @@ assign_all_employees([], Slots, Slots).
 assign_all_employees([Employee|RestEmployees], SlotsIn, SlotsOut) :-
     assign_employee(Employee, SlotsIn, UpdatedSlots),
     assign_all_employees(RestEmployees, UpdatedSlots, SlotsOut).
+
+valid_slot(slot(_, _, Min, Max, Workers)) :-
+    length(Workers, Count),
+    Count >= Min,
+    Count =< Max.
+
+valid_slots([]).
+
+valid_slots([Slot|Rest]) :-
+    valid_slot(Slot),
+    valid_slots(Rest).
