@@ -9,3 +9,7 @@ all_employees(Employees) :-
 
 all_workstations(Workstations) :-
     findall(workstation(Station, Min, Max), workstation(Station, Min, Max), Workstations).
+
+active_workstation(Station, Shift) :-
+    workstation(Station, _, _),
+    \+ workstation_idle(Station, Shift).
