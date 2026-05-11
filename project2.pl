@@ -45,3 +45,9 @@ assign_employee_to_slot(Employee,
     can_work(Employee, Shift, Station),
     length(Workers, Count),
     Count < Max.
+
+assign_employee(Employee, [Slot|Rest], [NewSlot|Rest]) :-
+    assign_employee_to_slot(Employee, Slot, NewSlot).
+
+assign_employee(Employee, [Slot|Rest], [Slot|NewRest]) :-
+    assign_employee(Employee, Rest, NewRest).
