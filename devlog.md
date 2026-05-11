@@ -300,3 +300,24 @@ The `\+` operator is being used as negation-as-failure, which works well here be
 
 ### Next step
 Next, I plan to add helper predicates for employee restrictions. The next part of the project is checking whether an employee can work a shift and whether an employee can work at a workstation.
+
+-------------------------------------------------------------------------------------------------------------
+
+## 2026-05-09 6:45 PM --- Session 8 - Employee Eligibility Helpers
+
+### Thoughts so far
+The project now has helpers for collecting employees, collecting workstations, listing valid shifts, and checking whether a workstation is active during a shift. The active workstation helper was tested with `example-input-1.pl` and correctly filtered out workstation 3 during the morning shift.
+
+The next requirement is to handle employee restrictions. The input files can include `avoid_shift/2` facts for shifts an employee cannot work and `avoid_workstation/2` facts for workstations an employee cannot work at. Before building full assignments, I need helper predicates that can check these restrictions.
+
+### Plan for this session
+- Add a `can_work_shift/2` helper predicate
+- Add a `can_work_station/2` helper predicate
+- Use negation-as-failure to reject avoided shifts and avoided workstations
+- Test the helpers with `example-input-1.pl`
+- Confirm that Daniel cannot work night
+- Confirm that Ophelia cannot work workstations 1 or 3
+- Commit the employee eligibility helpers
+- Add an end-of-session reflection
+- Push the session progress to GitHub
+
