@@ -229,3 +229,21 @@ The test also confirmed again that loading files with hyphens requires quotes, s
 
 ### Next step
 Next, I plan to add a helper for the three valid shifts: morning, evening, and night. After that, I can begin checking whether a workstation is active or idle during a specific shift.
+
+-------------------------------------------------------------------------------------------------------------
+
+## 2026-05-09 4:27 PM --- Session 6 - Shift Helper
+
+### Thoughts so far
+The project now has helper predicates for collecting employees and workstations from the consulted input facts. Both helpers were tested with `example-input-1.pl` and returned the expected lists.
+
+The next piece of scheduling information is the set of valid shifts. The project only uses three shifts: morning, evening, and night. Adding a small `shift/1` helper will make later predicates easier to write because other parts of the program can ask Prolog for each valid shift.
+
+### Plan for this session
+- Add a `shift/1` helper predicate
+- Define the three valid shifts: morning, evening, and night
+- Load `project2.pl` in SWI-Prolog
+- Test that `shift(Shift).` generates all three shifts
+- Commit the shift helper
+- Add an end-of-session reflection
+- Push the session progress to GitHub
