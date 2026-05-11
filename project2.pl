@@ -1,4 +1,5 @@
 plan(Plan) :-
+    input_ready,
     all_employees(Employees),
     all_empty_slots(EmptySlots),
     valid_slot_limits(EmptySlots),
@@ -8,14 +9,20 @@ plan(Plan) :-
     slots_to_plan(FilledSlots, Plan),
     !.
 
+input_ready :-
+    current_predicate(employee/1),
+    current_predicate(workstation/3).
+
 shift(morning).
 shift(evening).
 shift(night).
 
 all_employees(Employees) :-
+    current_predicate(employee/1),
     findall(Employee, employee(Employee), Employees).
 
 all_workstations(Workstations) :-
+    current_predicate(workstation/3),
     findall(workstation(Station, Min, Max), workstation(Station, Min, Max), Workstations).
 
 is_idle(Station, Shift) :-
@@ -31,15 +38,19 @@ avoids_workstation(Employee, Station) :-
     avoid_workstation(Employee, Station).
 
 active_workstation(Station, Shift) :-
+    current_predicate(workstation/3),
     workstation(Station, _, _),
     \+ is_idle(Station, Shift).
 
 can_work_shift(Employee, Shift) :-
+    current_predicate(employee/1),
     employee(Employee),
     shift(Shift),
     \+ avoids_shift(Employee, Shift).
 
 can_work_station(Employee, Station) :-
+    current_predicate(employee/1),
+    current_predicate(workstation/3),
     employee(Employee),
     workstation(Station, _, _),
     \+ avoids_workstation(Employee, Station).
@@ -50,6 +61,7 @@ can_work(Employee, Shift, Station) :-
     active_workstation(Station, Shift).
 
 empty_slot(slot(Shift, Station, Min, Max, [])) :-
+    current_predicate(workstation/3),
     shift(Shift),
     workstation(Station, Min, Max),
     active_workstation(Station, Shift).
